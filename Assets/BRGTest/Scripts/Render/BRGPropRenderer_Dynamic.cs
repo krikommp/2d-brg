@@ -277,8 +277,8 @@ namespace BRGTest
             drawCommands.drawRanges[0] = new BatchDrawRange
             {
                 drawCommandsBegin = 0,
-                // drawCommandsCount = (uint)drawCommandCount,
-                drawCommandsCount = 1,
+                drawCommandsCount = (uint)drawCommandCount,
+                // drawCommandsCount = 1,
                 filterSettings = new BatchFilterSettings
                 {
                     renderingLayerMask = 1,
@@ -306,7 +306,7 @@ namespace BRGTest
             {
                 drawCommands.instanceSortingPositions[i * 3 + 0] = test.x;
                 drawCommands.instanceSortingPositions[i * 3 + 1] = test.y;
-                drawCommands.instanceSortingPositions[i * 3 + 2] = test.z + BRGController.Instance.m_testOffset;
+                drawCommands.instanceSortingPositions[i * 3 + 2] = m_batches[i].m_sortingPosition.z;
             }
             drawCommands.drawCommands = Malloc<BatchDrawCommand>((uint)drawCommandCount);
             for (int i = 0; i < m_batches.Count; ++i)

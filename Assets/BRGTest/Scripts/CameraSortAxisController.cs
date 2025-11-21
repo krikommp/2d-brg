@@ -28,13 +28,18 @@ public class CameraSortAxisController : MonoBehaviour
             return;
         }
 
-        ApplySortAxisSettings();
+        ApplySortAxisSettings(targetCamera);
+
+        foreach (var cam in UnityEditor.SceneView.GetAllSceneCameras())
+        {
+            ApplySortAxisSettings(cam);
+        }
     }
 
     /// <summary>
     /// 应用自定义排序轴设置到目标相机
     /// </summary>
-    public void ApplySortAxisSettings()
+    public void ApplySortAxisSettings(Camera camera)
     {
         if (targetCamera == null)
         {
@@ -43,11 +48,11 @@ public class CameraSortAxisController : MonoBehaviour
         }
 
         // 设置排序模式和自定义轴
-        targetCamera.transparencySortMode = sortMode;
+        camera.transparencySortMode = sortMode;
         
         if (sortMode == TransparencySortMode.CustomAxis)
         {
-            targetCamera.transparencySortAxis = sortAxis;
+            camera.transparencySortAxis = sortAxis;
         }
 
         Debug.Log($"Camera sort axis applied: {sortAxis}, Mode: {sortMode}");
@@ -60,7 +65,13 @@ public class CameraSortAxisController : MonoBehaviour
     {
         sortAxis = newAxis;
         sortMode = TransparencySortMode.CustomAxis;
-        ApplySortAxisSettings();
+      
+        ApplySortAxisSettings(targetCamera);
+
+        foreach (var cam in UnityEditor.SceneView.GetAllSceneCameras())
+        {
+            ApplySortAxisSettings(cam);
+        }
     }
 
     /// <summary>
@@ -93,7 +104,12 @@ public class CameraSortAxisController : MonoBehaviour
     [ContextMenu("Apply Settings Now")]
     private void ApplySettingsEditor()
     {
-        ApplySortAxisSettings();
+        ApplySortAxisSettings(targetCamera);
+
+        foreach (var cam in UnityEditor.SceneView.GetAllSceneCameras())
+        {
+            ApplySortAxisSettings(cam);
+        }
     }
 
     /// <summary>
@@ -104,7 +120,12 @@ public class CameraSortAxisController : MonoBehaviour
     {
         sortMode = TransparencySortMode.Default;
         sortAxis = new Vector3(0f, 0f, 1f);
-        ApplySortAxisSettings();
+        ApplySortAxisSettings(targetCamera);
+
+        foreach (var cam in UnityEditor.SceneView.GetAllSceneCameras())
+        {
+            ApplySortAxisSettings(cam);
+        }
     }
 
     // 在Inspector中绘制Gizmos以可视化排序轴
